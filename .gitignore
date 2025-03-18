@@ -1,4 +1,4 @@
-app/model
+backend_service/model
 tts_model
 test.wav
 audio.wav

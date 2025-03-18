@@ -39,14 +39,19 @@ sequenceDiagram
 - **Uvicorn:** As the ASGI server to run the application.
 - **Docker**: For containerizing the application.
 
-### Prerequisites
-- Docker installed on your machine.
+### Prerequisites (on your machine)
+- Ubuntu 24.04.1
+- Docker
+- Docker compose 
+- nvidia-container-toolkit
+- cuda-toolkit 12.6
+- NGC Cli
 
 ## Getting Started
 ```shell
-cd app
-docker build -t voice_ai .
-docker run -p 8765:8765 voice_ai
+git clone https://github.com/geksogen/Web_Based_Voice_AI.git
+cd Web_Based_Voice_AI
+docker-compose up --build -d
 ```
 ### Access the application:
 
