@@ -37,3 +37,11 @@ sequenceDiagram
 - **Pydub:** For processing and converting audio files.
 - **Uvicorn:** As the ASGI server to run the application.
 
+## Run on Docker
+```shell
+cd app
+docker build -t voice_ai .
+docker run -p 8765:8765 voice_ai
+```
+Open local index.html page end start voice assistance :!)
+

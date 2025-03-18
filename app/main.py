@@ -8,7 +8,7 @@ import os
 from vosk import Model, KaldiRecognizer
 from pydub import AudioSegment
 
-AudioSegment.converter = 'c:\\ffmpeg\\ffmpeg.exe'
+#AudioSegment.converter = 'c:\\ffmpeg\\ffmpeg.exe' # No coment for run Windows
 
 app = FastAPI()
 
