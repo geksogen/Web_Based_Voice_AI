@@ -2,27 +2,6 @@
 
 This project is a server application designed for real-time speech recognition using the Vosk model. The application leverages FastAPI to create WebSockets, enabling the handling of audio streams sent by clients.
 
-```plantuml
-@startuml
-actor Client
-participant "FastAPI Server" as Server
-participant "WebSocket" as WS
-participant "Audio Processor" as AP
-participant "Vosk Model" as VM
-
-Client -> Server: Connect to WebSocket
-Server -> WS: Accept WebSocket connection
-Client -> WS: Send audio data (WebM format)
-WS -> AP: Receive audio data
-AP -> AP: Convert WebM to WAV
-AP -> AP: Set audio to mono, 16-bit, 16000 Hz
-AP -> VM: Send processed audio data
-VM -> VM: Perform speech recognition
-VM -> WS: Return recognized text
-WS -> Client: Send recognized text
-
-@enduml
-```
 
 ```mermaid
 sequenceDiagram
