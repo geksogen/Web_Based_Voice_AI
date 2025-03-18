@@ -29,6 +29,7 @@ sequenceDiagram
 - **Speech Recognition:** Utilizes the Vosk model to convert audio into text.
 - **Format Support:** Converts audio files from WebM to WAV for processing.
 - **Lightweight and Performant:** Uses FastAPI and Uvicorn to ensure high performance and scalability.
+- **Docker Support**: Containerized for easy deployment across different environments.
 
 ## Technologies:
 
@@ -36,12 +37,24 @@ sequenceDiagram
 - **Vosk:** For speech recognition.
 - **Pydub:** For processing and converting audio files.
 - **Uvicorn:** As the ASGI server to run the application.
+- **Docker**: For containerizing the application.
 
-## Run on Docker
+### Prerequisites
+- Docker installed on your machine.
+
+## Getting Started
 ```shell
 cd app
 docker build -t voice_ai .
 docker run -p 8765:8765 voice_ai
 ```
-Open local index.html page end start voice assistance :!)
+### Access the application:
 
+* Open your browser and navigate to http://localhost:8765.
+* Use a WebSocket client to connect to ws://localhost:8765/ws and start sending audio data.
+
+## Contributing
+Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+
+## License
+This project is licensed under the MIT License. 
