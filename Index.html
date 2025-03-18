@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Chat AI</title>
+    <style>
+        #loading { display: none; font-weight: bold; color: blue; }
+        #response { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Voice Chat AI</h1>
+    <button id="start">Start Recording</button>
+    <button id="stop" disabled>Stop Recording</button>
+    <p id="loading">Loading...</p>
+    <p>AI Response: <span id="response"></span></p>
+<script>
+        let audioContext, mediaRecorder;
+        const startButton = document.getElementById("start");
+        const stopButton = document.getElementById("stop");
+        const responseElement = document.getElementById("response");
+        const loadingElement = document.getElementById("loading");
+        let socket = new WebSocket("ws://localhost:8765/ws");
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const inputText = data.input || "No input detected";
+            responseElement.textContent += `\nUser said: ${inputText}`;
+            const aiResponse = data.response || "No response from AI";
+            responseElement.textContent += `\nAI says: ${aiResponse}\n`;
+            loadingElement.style.display = "none";
+            const utterance = new SpeechSynthesisUtterance(aiResponse);
+            speechSynthesis.speak(utterance);
+        };
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+            loadingElement.style.display = "none";
+        };
+        startButton.addEventListener("click", async () => {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            const audioChunks = [];
+            mediaRecorder.ondataavailable = (event) => {
+                audioChunks.push(event.data);
+            };
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+                loadingElement.style.display = "block";
+                socket.send(audioBlob);
+            };
+            mediaRecorder.start();
+            startButton.disabled = true;
+            stopButton.disabled = false;
+        });
+        stopButton.addEventListener("click", () => {
+            mediaRecorder.stop();
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        });
+    </script>
+</body>
+</html>
