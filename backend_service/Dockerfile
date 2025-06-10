@@ -4,6 +4,8 @@ FROM python:3.11
 # Устанавливаем зависимости системы
 RUN apt-get update && apt-get install -y \
     ffmpeg \
+    wget \
+    unzip \
     libasound2-dev \
     portaudio19-dev \
     && apt-get clean \
@@ -18,8 +20,14 @@ COPY . /app
 # Устанавливаем Python зависимости
 RUN pip install --no-cache-dir fastapi uvicorn pydub vosk aiofiles pyaudio aiofiles
 
-# Копируем модель Vosk в контейнер (предполагается, что модель находится в папке "model")
-COPY model /app/model
+# Скачиваем архив с моделью
+RUN wget -O /app/model/vosk-model-small-ru-0.22.zip https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
+
+# Распаковываем архив
+RUN unzip /app/model/vosk-model-small-ru-0.22.zip -d /app/model
+
+# Удаляем архив после распаковки
+RUN rm /app/model/vosk-model-small-ru-0.22.zip
 
 # Открываем порт, на котором будет работать приложение
 EXPOSE 8765
