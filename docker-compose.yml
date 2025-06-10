@@ -33,7 +33,7 @@ services:
     networks:
       - ollama-docker
   nginx:
-    build: .
+    build: ./client_app
     ports:
       - "80:80"
     container_name: nginx_service_voice_ai
