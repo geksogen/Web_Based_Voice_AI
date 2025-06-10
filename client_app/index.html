@@ -21,7 +21,7 @@
         const stopButton = document.getElementById("stop");
         const responseElement = document.getElementById("response");
         const loadingElement = document.getElementById("loading");
-        let socket = new WebSocket("ws://81.94.156.222:8765/ws");
+        let socket = new WebSocket("ws://localhost:8765/ws");
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
             const inputText = data.input || "No input detected";
