@@ -20,14 +20,9 @@ COPY . /app
 # Устанавливаем Python зависимости
 RUN pip install --no-cache-dir fastapi uvicorn pydub vosk aiofiles pyaudio aiofiles
 
-# Скачиваем архив с моделью
-RUN wget -O /app/model/vosk-model-small-ru-0.22.zip https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
-
-# Распаковываем архив
-RUN unzip /app/model/vosk-model-small-ru-0.22.zip -d /app/model
-
-# Удаляем архив после распаковки
-RUN rm /app/model/vosk-model-small-ru-0.22.zip
+CMD wget -O /app/model/vosk-model-small-ru-0.22.zip https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip && \
+    unzip /app/model/vosk-model-small-ru-0.22.zip -d /app/model && \
+    rm /app/model/vosk-model-small-ru-0.22.zip
 
 # Открываем порт, на котором будет работать приложение
 EXPOSE 8765
