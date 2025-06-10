@@ -26,6 +26,12 @@ RUN mkdir -p /app/model
 # Скачиваем архив с моделью
 RUN wget -O /app/model/vosk-model-small-ru-0.22.zip https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
 
+# Распаковываем архив
+RUN unzip /app/model/vosk-model-small-ru-0.22.zip -d /app/model
+
+# Удаляем архив после распаковки
+RUN rm /app/model/vosk-model-small-ru-0.22.zip
+
 # Открываем порт, на котором будет работать приложение
 EXPOSE 8765
 
