@@ -32,6 +32,16 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     networks:
       - ollama-docker
+  nginx:
+    build: .
+    ports:
+      - "80:80"
+    container_name: nginx_service_voice_ai
+    volumes:
+      - ./client_app/index.html:/usr/share/nginx/html
+    networks:
+      - ollama-docker
+    restart: unless-stopped
 
 networks:
   ollama-docker:

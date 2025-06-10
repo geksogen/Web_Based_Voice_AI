@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+signal
+json
+aiofiles
+pyaudio
+vosk
+pydub
