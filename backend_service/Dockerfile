@@ -21,25 +21,25 @@ COPY . /app
 RUN pip install fastapi uvicorn pydub vosk aiofiles pyaudio aiofiles
 
 # Создаем директорию для модели
-RUN mkdir -p /app/model
+RUN mkdir -p app/model
 
 # Скачиваем архив с моделью
-RUN wget -O /app/model/vosk-model-small-ru-0.22.zip https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
+RUN wget -O app/model/vosk-model-small-ru-0.22.zip https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
 
 # Распаковываем архив
-RUN unzip /app/model/vosk-model-small-ru-0.22.zip -d /app/model
+RUN unzip app/model/vosk-model-small-ru-0.22.zip -d app/model
+
+# Перемещаем содержимое в целевую директорию
+RUN mv app/model/vosk-model-small-ru-0.22/* app/model/
 
 # Удаляем архив после распаковки
-RUN rm /app/model/vosk-model-small-ru-0.22.zip
+RUN rm -rf app/model/vosk-model-small-ru-0.22.zip
 
-# Выводим информацию о содержимом директории (опционально)
-RUN ls -la /app/model
-
-# Выводим информацию о содержимом директории (опционально)
-RUN ls -la /app
+# Удаляем директорию после распаковки
+RUN rm -rf app/model/vosk-model-small-ru-0.22
 
 # Открываем порт, на котором будет работать приложение
 EXPOSE 8765
 
 # Команда для запуска приложения
-#CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8765"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8765"]
