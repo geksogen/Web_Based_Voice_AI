@@ -32,8 +32,14 @@ RUN unzip /app/model/vosk-model-small-ru-0.22.zip -d /app/model
 # Удаляем архив после распаковки
 RUN rm /app/model/vosk-model-small-ru-0.22.zip
 
+# Выводим информацию о содержимом директории (опционально)
+RUN ls -la /app/model
+
+# Выводим информацию о содержимом директории (опционально)
+RUN ls -la /app
+
 # Открываем порт, на котором будет работать приложение
 EXPOSE 8765
 
 # Команда для запуска приложения
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8765"]
+#CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8765"]
